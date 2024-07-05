@@ -1,15 +1,13 @@
-num1 = 1
-num2 = 2
-list_of_terms = [1, 2]
-while num2 < 4000000:
-    temp_num = num1 + num2
-    num1 = num2
-    num2 = temp_num
-    list_of_terms.append(num2)
-print(list_of_terms)
+import math
+initial_num = 600851475143
+new_num = initial_num
+sq_root_of_initial = int(round(math.sqrt(initial_num)))
+prime_factors = []
 
-total = 0
-for num in list_of_terms:
-    if num % 2 == 0:
-        total = total + num
-print (total)
+for num in range (2, sq_root_of_initial):
+    if new_num % num == 0:
+        new_num = int(new_num/num)
+        prime_factors.append(num)
+
+
+print(prime_factors[-1])
