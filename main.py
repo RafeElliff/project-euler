@@ -1,14 +1,22 @@
-total_of_squares = 0
-for num in range (1, 101):
-    total_of_squares = total_of_squares + num**2
+def is_prime(number_to_check):
+    factor = 2
+    prime = True
+    if number_to_check == 1:
+        prime = False
+    while number_to_check > factor and prime is True:
+        if number_to_check % factor == 0:
+            prime = False
+        else:
+            factor = factor + 1
+    return prime
+
+num_of_primes = 0
+num_to_check = 1
+while num_of_primes < 10001:
+    num_to_check = num_to_check + 1
+    if is_prime(num_to_check) is True:
+        num_of_primes = num_of_primes + 1
+        print(num_of_primes)
+print(num_to_check)
 
 
-total_squared = 0
-for num in range (1, 101):
-    total_squared = total_squared + num
-total_squared = total_squared**2
-
-if total_squared > total_of_squares:
-    print(total_squared - total_of_squares)
-else:
-    print(total_of_squares-total_squared)
