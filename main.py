@@ -1,30 +1,34 @@
-list_of_palindromes = []
-def palindrome_check(num):
-    flipped_str_list = []
-    str_num = str(num)
-    letters_in_str = list(str_num)
-    for num in range (0, len(letters_in_str)):
-        flipped_str_list.append(letters_in_str[-1])
-        letters_in_str = letters_in_str[:-1]
-    flipped_str = "".join(flipped_str_list)
-    if flipped_str == str_num:
-        palindrome = True
-    else:
-        palindrome = False
-    return palindrome
-
-def find_biggest_num(list):
-    while len(list) > 1:
-        if list[0] < list[1]:
-            list.pop(0)
+list = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20] #got rid of 1-10 because none of them have unique prime factors so it is faster to not run them
+initial_dict = {}
+def find_prime_factors(num_to_check):
+    dict_of_prime_factors = {}
+    number = 2
+    while number <= num_to_check:
+        if num_to_check % number == 0:
+            num_to_check = num_to_check/number
+            if number not in dict_of_prime_factors:
+                dict_of_prime_factors[number] = 1
+            else:
+                dict_of_prime_factors[number] = dict_of_prime_factors[number] + 1
+            number = 2
         else:
-            list.pop(1)
-    return list
+            number = number + 1
+    return dict_of_prime_factors
 
-for num1 in range (100, 1000):
-    for num2 in range (100,1000):
-        product = num1*num2
-        if palindrome_check(product) == True:
-            list_of_palindromes.append(product)
-print(find_biggest_num(list_of_palindromes)[0])
+def update_factors(original_dict, dict_to_check):
+    for key, value in dict_to_check.items():
+        if key not in original_dict:
+            original_dict[key] = value
+        elif original_dict[key] < dict_to_check[key]:
+            original_dict[key] = dict_to_check[key]
+    return original_dict
+
+
+for item in list:
+    update_factors(initial_dict, find_prime_factors(item))
+
+num = 1
+for key, value in initial_dict.items():
+    num = num * (int(key)**int(value))
+print(num)
 
