@@ -16,7 +16,4 @@ while num_of_primes < 10001:
     num_to_check = num_to_check + 1
     if is_prime(num_to_check) is True:
         num_of_primes = num_of_primes + 1
-        print(num_of_primes)
 print(num_to_check)
-
-
