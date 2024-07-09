@@ -12,7 +12,7 @@ def get_product(list_to_check, index, num_of_digits):
 # print(get_product(list_of_digits, 0, 3))
 
 current_highest = 0
-for number in range (0, len(list_of_digits)-13):
+for number in range (0, len(list_of_digits)-12):
     product = get_product(list_of_digits, number, num_of_digits_to_check)
     if product > current_highest:
         current_highest = product
