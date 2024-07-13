@@ -1,35 +1,52 @@
-#example numbers
-#check 1000
-#check 1-20
-#check 21-99 - assign value for each 10 and
-list_of_nums_of_chars_in_first_20 = [0, 3, 3, 5, 4, 4, 3, 5, 5, 4, 3, 6, 6, 8, 8, 7, 7, 9, 8, 8] # number of characters in nums 0-19, corresponding to index
-list_of_nums_of_chars_in_10s = [0, 0, 6, 6, 5, 5, 5, 7, 6, 6] #although I could do this by adding 2 to the original number (i.e. value for nine is 4, therefore ninety is 6, there are enough exceptions (thirty, forty, eighty) i figured it would be better to do manually
-#spent 10 mins debugging this code, turns out i had the value for eighteen as 9 instead of 8.
-total = 0
-for num in range (1, 1001):
-    if num <= 19:
-        num_of_chars = list_of_nums_of_chars_in_first_20[num]
-    elif 100 > num >= 20:
-        str_num = str(num)
-        first_digit = list_of_nums_of_chars_in_10s[int(str_num[0])]
-        second_digit = list_of_nums_of_chars_in_first_20[int(str_num[1])]
-        num_of_chars = first_digit + second_digit
-        print(first_digit, second_digit)
-    elif 1000 > num >= 100:
-        str_num = str(num)
-        first_digit = list_of_nums_of_chars_in_first_20[int(str_num[0])] + 7 # this represents the number and the 'hundred' e.g. one = 3, 3+7 = 10 therefore one hundred = 10
-        if int(str_num[1:]) <= 19:
-            second_digit = list_of_nums_of_chars_in_first_20[int(str_num[1:])]
-            third_digit = 0
+day = 1
+month = 1
+day_of_week = 1 #1-7 representing mon-sun
+year = 1900
+num_of_sundays = 0
+
+def last_day_of_month(day, month, year):
+    thirty_days = [4, 6, 9, 11]
+    if month in thirty_days:
+        if day == 30:
+            return True
         else:
-            second_digit = list_of_nums_of_chars_in_10s[int(str_num[1])]
-            third_digit = list_of_nums_of_chars_in_first_20[int(str_num[2])]
-        if num % 100 != 0:
-            first_digit = first_digit + 3 #this represents the 'and' in numbers that aren't perfect hundreds
-        num_of_chars = first_digit + second_digit + third_digit
-        print(first_digit, second_digit, third_digit)
+            return False
+    elif month == 2:
+        if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+            if day == 29:
+                return True
+            else:
+                return False
+        else:
+            if day == 28:
+                return True
+            else:
+                return False
+    elif day == 31:
+        return True
     else:
-        num_of_chars = 11
-    print(num, num_of_chars)
-    total = total + num_of_chars
-print(total)
+        return False
+
+def change_day_of_week(day_of_week):
+    if day_of_week == 7:
+        day_of_week = 1
+    else:
+        day_of_week = day_of_week + 1
+    return day_of_week
+
+while year < 2001:
+    if month == 12 and day == 31:
+        year = year + 1
+        day = 1
+        month = 1
+    elif last_day_of_month(day, month, year) is True:
+        month = month + 1
+        day = 1
+    else:
+        day = day + 1
+
+    day_of_week = change_day_of_week(day_of_week)
+    if day_of_week == 7 and day == 1 and year > 1900:
+        num_of_sundays = num_of_sundays + 1
+    print(day, day_of_week)
+print(num_of_sundays)
